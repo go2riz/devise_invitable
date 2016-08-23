@@ -331,7 +331,8 @@ module Devise
         def find_by_invitation_token(original_token, only_valid)
           invitation_token = Devise.token_generator.digest(self, :invitation_token, original_token)
 
-          invitable = find_or_initialize_with_error_by(:invitation_token, invitation_token)
+          #invitable = find_or_initialize_with_error_by(:invitation_token, invitation_token)
+          invitable = find_or_initialize_with_error_by(:invitation_token, original_token)
           invitable.errors.add(:invitation_token, :invalid) if invitable.invitation_token && invitable.persisted? && !invitable.valid_invitation?
           invitable unless only_valid && invitable.errors.present?
         end
